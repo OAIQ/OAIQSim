@@ -1,0 +1,5 @@
+To do in this folder: 
+
+ - Move GUI to general gui     
+ - Make CPU and GPU mex code available?
+ - Make compilation function work  (OK!  9/29/16)
