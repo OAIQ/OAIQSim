@@ -5,3 +5,11 @@ bin/
 *.gz
 *.mexmaci64
 *.mexa64
+*.sty
+*.bbl
+*.log
+*.out
+*.bak
+*.maf
+*.mtc
+*.mtc0
