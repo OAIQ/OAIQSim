@@ -1,0 +1,7 @@
+sandbox/
+bin/
+*.tex
+*.aux
+*.gz
+*.mexmaci64
+*.mexa64
