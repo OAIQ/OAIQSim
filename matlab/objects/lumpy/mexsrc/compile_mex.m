@@ -34,6 +34,10 @@ end
 
 %!!NOTE!!: Must leave a space at the beginning of each file name!
 
+if(~exist('../mexbin','dir'))
+    mkdir('../mexbin')
+end
+
 switch GPU
     case 1
         % Compile binaries for CPU/GPU
