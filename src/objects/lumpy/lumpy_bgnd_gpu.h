@@ -1,6 +1,6 @@
 // ------------------------------------------------------------------------
 // *************************** OAIQSIM TOOLBOX ****************************
-// File:    lumpy_kernel_gpu.h
+// File:    lumpy_bgnd_gpu.h
 // Purpose: This header contains the CPU compute kernel for the 
 //          standard lumpy background 
 // Author:  Nick Henscheid

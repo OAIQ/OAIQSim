@@ -189,19 +189,19 @@ T GaussianLump3D(T* R, T* R0, T b0, T* P)
     return b0*exp(-0.5*exponent);
 }
 
-template<typename T>
-T EllipseLump2D(T* R, T* R0, T b0, T* R)
-{
-    // Evaluates a single *2D* anisotropic Elliptical Lump with center R0 at 
-    // position R with amplitude b0 and rotation matrix P
-    // P[0],...,theta[d*(d+1)/2-1] gives the rotation matrix in symmetric
-    // matrix column-major form.  Note that P is the precision matrix, i.e.
-    // l(R) = b0*chi(R-R0) where chi(R) is the indicator of the 
-    T xs  = R[0]-R0[0];
-    T ys  = R[1]-R0[1];
-    T val = 
-    return b0*(;
-}
+// template<typename T>
+// T EllipseLump2D(T* R, T* R0, T b0, T* R)
+// {
+//     // Evaluates a single *2D* anisotropic Elliptical Lump with center R0 at 
+//     // position R with amplitude b0 and rotation matrix P
+//     // P[0],...,theta[d*(d+1)/2-1] gives the rotation matrix in symmetric
+//     // matrix column-major form.  Note that P is the precision matrix, i.e.
+//     // l(R) = b0*chi(R-R0) where chi(R) is the indicator of the 
+//     T xs  = R[0]-R0[0];
+//     T ys  = R[1]-R0[1];
+//     T val = 
+//     return b0*(;
+// }
 
 
 

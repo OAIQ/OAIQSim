@@ -184,7 +184,6 @@ vec2vec RectDomain<d>::GetExitTimes(std::vector<Eigen::Matrix<numtype,d,1> > &r,
     // 2) compute exit times on gpu
     // 3) return to cpu
     
-    
     int n = r.size(); 
     vec2vec tau;
     

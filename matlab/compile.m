@@ -64,13 +64,16 @@ end
 
 MEXOPTS = struct('CGRISRC',CGRISRC,'mexext',mexext,'CUDALIB',CUDALIB,'GPU',GPU,'VERBOSE',VERBOSE);
 
-%folders = {'objects/diffusion'}
-%folders = {'objects/lumpy','objects/diffusion','objects/anisolumpy','imaging/rte/RTELumpy'};
-folders  = {'objects/lumpy'};
-%folders = {'imaging/rte/RTELumpy'};
-%folders = {'imaging/rte/RTEFourier'};
-for iFolder = 1:length(folders)
-    addpath([CGRIMATLAB,'/',folders{iFolder}]);
+
+folders = {'objects/lumpy','imaging/rte/RTELumpy'};
+[mods_to_compile,OK] = listdlg('PromptString','Select which modules to compile',...
+                                'SelectionMode','multiple',...
+                                'ListString',{'Objects/Lumpy'},...
+                                'InitialValue',1:length(folders),...
+                                'ListSize',[300,200]);
+                            
+for iFolder = 1:length(mods_to_compile)
+    addpath([CGRIMATLAB,'/',folders{mods_to_compile(iFolder)}]);
     cd(folders{iFolder})
     if(exist('./mexsrc','dir')==7)
         disp('mex folder exists!  Compiling...')
