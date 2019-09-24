@@ -3,7 +3,7 @@
 %
 % File:     LumpyBgnd.m
 % Author:   Nick Henscheid
-% Date:     9-2016
+% Date:     9-2016, 9-2019
 % Info:     u = LumpyBgnd(varargin). The lumpy background object.
 %           The name-value pairs in varargin determine the random field     
 % Inputs: 
@@ -25,17 +25,20 @@
 
 classdef LumpyBgnd < handle
     properties (SetObservable = true)
-        b0   % Lump "Amplitude" (assuming constant for classical LBG)
-        B0   % DC offset
-        cov  % Lump covariance matrix 
-        Kbar % Mean number of lumps
-        centers % Lump centers
-        gpu  % Evaluate using gpu or not
-        N    % Default number of eval. pts in ea. direction 
+        b               % Lump "Amplitude"
+        B0              % DC offset
+        cov             % Lump covariance matrix 
+        Kbar            % Mean number of lumps
+        centers         % Lump centers
+        gpu             % Evaluate using gpu or not
+        N               % Default number of eval. pts in ea. direction 
+        K_distr;        % Probability distribution for the # of lumps
+        centers_distr;  % Probability distribution for the lump centers 
+        b_distr;        % Probability distribution for the lump amplitudes
     end
     
     properties (Dependent)
-        L;% Bounding box for evaluation (lump centers can extend slightly beyond to avoid edge effect issues)
+        L;    % Bounding box for evaluation (lump centers can extend slightly beyond to avoid edge effect issues)
         dim; 
         K; 
     end
@@ -45,7 +48,7 @@ classdef LumpyBgnd < handle
         pad_factor = 3;      % Padding factor (so that boundary effects don't occur)
         show_warnings = 1;
         random_number_of_lumps = 1; % Randomize number of lumps when randomize() is called?
-        normalize;                  % Produce an approximate PDF?
+        normalize;                  % Produce an approximate PDF?      
     end
     
     % Standard methods
@@ -53,7 +56,7 @@ classdef LumpyBgnd < handle
         function obj = LumpyBgnd(varargin)
             p = obj.ParseInputs(varargin{:});
             obj.Kbar     = p.Results.Kbar;
-            obj.b0       = p.Results.b0;
+            %obj.b        = p.Results.b;
             obj.B0       = p.Results.B0;
             obj.support  = p.Results.support;
             if(numel(p.Results.cov)==1)
@@ -62,7 +65,9 @@ classdef LumpyBgnd < handle
                 obj.cov = p.Results.cov;
             end
             obj.centers = p.Results.centers;
-            obj.centers;
+            obj.K_distr = p.Results.K_distr;
+            obj.centers_distr = p.Results.centers_distr;
+            obj.b_distr = p.Results.b_distr;
             
             if(gpuDeviceCount()>0)
                 obj.gpu     = p.Results.gpu;
@@ -134,7 +139,7 @@ classdef LumpyBgnd < handle
         % Externally defined functions
         p = ParseInputs(varargin);
         u = eval(obj,X,XSize);
-        obj = randomize(obj)
+        obj = randomize(obj,varargin)
         varargout = plot(obj,varargin);
         z = minus(x,y);  % Method to subtract two lumpy backgrounds
         z = plus(x,y);   % Method to add two lumpy backgrounds

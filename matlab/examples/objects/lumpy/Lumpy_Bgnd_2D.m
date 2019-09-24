@@ -77,11 +77,10 @@ plot(L);title(sprintf('L.cov = [%1.1e,%1.1e;%1.1e,%1.1e]',L.cov(1,1),L.cov(1,2),
 lump_mean = log(0.07);
 lump_std  = log(0.12);
 L.cov = exp(lump_mean+lump_std*randn())*eye(2);  % Lognormally distributed
-L.b0  = 1/sqrt((2*pi)^2*det(L.cov));  %PDF/Gaussian mixture model scaling
+
 for i=1:L.K-1
     covtemp = exp(lump_mean+lump_std*randn())*eye(2);
     L.cov = [L.cov,covtemp];
-    L.b0  = [L.b0,1/sqrt((2*pi)^2*det(covtemp))];
 end
 
 subplot(2,4,8);
